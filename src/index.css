@@ -1,0 +1,64 @@
+:root {
+  color-scheme: light;
+  --ink: #0f2e36;
+  --ink-soft: #2a4f58;
+  --mist: #e7f1ef;
+  --mist-deep: #cfe0dc;
+  --foam: #f6fbf9;
+  --cinnabar: #d9773a;
+  --cinnabar-deep: #b85c24;
+  --sea: #3d7a78;
+  --line: rgba(15, 46, 54, 0.12);
+  --ok: #2f7d5a;
+  --bad: #b4413a;
+  --shadow: 0 18px 40px rgba(15, 46, 54, 0.12);
+  --radius: 18px;
+  --font-brand: 'Noto Serif TC', 'Songti TC', serif;
+  --font-ui: 'Outfit', 'Noto Sans TC', sans-serif;
+  font-family: var(--font-ui);
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--mist);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  background:
+    radial-gradient(120% 80% at 10% -10%, #d9ece8 0%, transparent 55%),
+    radial-gradient(90% 70% at 100% 0%, #f3e6d8 0%, transparent 45%),
+    linear-gradient(180deg, #eef6f4 0%, #dceae6 100%);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+#root {
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+}
