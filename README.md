@@ -11,11 +11,26 @@
 - 進度頁：技能分鐘數、近七日紀錄、語言／程度設定
 - 資料保存在瀏覽器 `localStorage`
 
-## 開發
+## 線上使用（iPhone / 任何裝置）
+
+合併到 `main` 並在 GitHub 啟用 Pages 後，用瀏覽器打開：
+
+**https://lucash2005.github.io/en-jp-learn/**
+
+### 啟用 GitHub Pages（一次即可）
+
+1. 打開倉庫 **Settings → Pages**
+2. **Source** 選 **GitHub Actions**
+3. 合併本 PR（或把 `main` 推上去）後，Actions 會自動建置並部署
+4. 幾分鐘後用上方網址開啟；iPhone 可用 Safari，再「加入主畫面」
+
+也可在 **Actions** 分頁手動跑 **Deploy GitHub Pages** workflow。
+
+## 開發（需電腦）
 
 ```bash
 npm install
-npm run dev
+npm run dev -- --host
 ```
 
 ## 建置
