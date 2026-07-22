@@ -45,6 +45,8 @@ export interface Exercise {
   translation?: string
   /** Grammar / usage note in Chinese */
   grammar?: string
+  /** Quote source, e.g. movie or anime title */
+  source?: string
   hint?: string
   options?: string[]
   answer?: string
