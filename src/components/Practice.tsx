@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useApp } from '../lib/AppContext'
+import { getSpeakableText } from '../lib/speech'
 import { SKILL_LABELS } from '../types'
+import { AudioPlayButton } from './AudioPlayButton'
+import { ExplanationPanel } from './ExplanationPanel'
+import { PronunciationPractice } from './PronunciationPractice'
 
 export function Practice() {
   const {
@@ -14,12 +18,16 @@ export function Practice() {
   const [written, setWritten] = useState('')
   const [feedback, setFeedback] = useState<'idle' | 'correct' | 'review'>('idle')
   const [speakDone, setSpeakDone] = useState(false)
+  const [speakScore, setSpeakScore] = useState<number | null>(null)
+  const [showExplain, setShowExplain] = useState(false)
 
   useEffect(() => {
     setSelected(null)
     setWritten('')
     setFeedback('idle')
     setSpeakDone(false)
+    setSpeakScore(null)
+    setShowExplain(false)
   }, [activeExercise?.id])
 
   if (!activeSkill || !activeExercise) {
@@ -36,12 +44,15 @@ export function Practice() {
   const exercise = activeExercise
   const isChoice = Boolean(exercise.options?.length)
   const isSpeak = exercise.skill === 'speak'
+  const isListen = exercise.skill === 'listen'
   const isFreeWrite = exercise.skill === 'write' && !isChoice
+  const audioText = exercise.audioText ?? getSpeakableText(exercise.content)
+  const showContentText = !isListen || feedback !== 'idle' || showExplain
 
   const check = () => {
     if (isSpeak) {
       setSpeakDone(true)
-      setFeedback('review')
+      setFeedback(speakScore !== null && speakScore >= 75 ? 'correct' : 'review')
       return
     }
     if (isChoice) {
@@ -57,7 +68,7 @@ export function Practice() {
   }
 
   const continueNext = () => {
-    submitExercise(feedback === 'correct')
+    submitExercise(feedback === 'correct' || (isSpeak && (speakScore ?? 0) >= 55))
   }
 
   return (
@@ -74,11 +85,57 @@ export function Practice() {
 
       <article className="practice-card animate-rise" key={exercise.id}>
         <p className="prompt">{exercise.prompt}</p>
+
         <div className={`content-block skill-${exercise.skill}`}>
-          <p className="content-main">{exercise.content}</p>
+          {showContentText ? (
+            <p className="content-main">{exercise.content}</p>
+          ) : (
+            <p className="content-main muted-listen">先聽音訊，再選出意思</p>
+          )}
         </div>
 
+        {isListen && (
+          <div className="audio-row">
+            <AudioPlayButton text={audioText} language={exercise.language} label="播放聽力" />
+            {feedback === 'idle' && (
+              <button
+                type="button"
+                className="btn ghost tight"
+                onClick={() => setShowExplain((v) => !v)}
+              >
+                {showExplain ? '隱藏原文' : '查看原文'}
+              </button>
+            )}
+          </div>
+        )}
+
+        {isSpeak && (
+          <PronunciationPractice
+            targetText={audioText}
+            language={exercise.language}
+            onCompared={(s) => {
+              setSpeakScore(s)
+              setSpeakDone(true)
+            }}
+          />
+        )}
+
+        {!isListen && !isSpeak && (exercise.skill === 'read' || exercise.skill === 'write') && (
+          <div className="audio-row">
+            <AudioPlayButton text={audioText} language={exercise.language} label="朗讀內容" />
+          </div>
+        )}
+
         {exercise.hint && feedback === 'idle' && <p className="hint">提示：{exercise.hint}</p>}
+
+        <ExplanationPanel
+          exercise={exercise}
+          revealed={feedback !== 'idle' || isSpeak || (!isListen && !isSpeak)}
+        />
+
+        {isSpeak && feedback === 'idle' && !speakDone && (
+          <p className="speak-guide">先聽範讀，再點「開始跟讀比對」；也可直接完成跟讀。</p>
+        )}
 
         {isChoice && (
           <div className="options">
@@ -113,15 +170,15 @@ export function Practice() {
           />
         )}
 
-        {isSpeak && feedback === 'idle' && (
-          <p className="speak-guide">朗讀兩到三遍後，點「完成跟讀」。</p>
-        )}
-
         {feedback !== 'idle' && (
           <div className={`feedback ${feedback}`}>
-            {feedback === 'correct' && <p>答對了，繼續保持。</p>}
-            {feedback === 'review' && isSpeak && speakDone && (
-              <p>跟讀完成。可對照語氣再練一次，或進入下一題。</p>
+            {feedback === 'correct' && !isSpeak && <p>答對了，繼續保持。</p>}
+            {isSpeak && (
+              <p>
+                {speakScore !== null
+                  ? `發音比對 ${speakScore} 分。可再練一次或進入下一題。`
+                  : '跟讀完成。可對照範讀再練一次，或進入下一題。'}
+              </p>
             )}
             {feedback === 'review' && isFreeWrite && (
               <p>
@@ -143,7 +200,9 @@ export function Practice() {
             type="button"
             className="btn primary wide"
             onClick={check}
-            disabled={isChoice ? !selected : isFreeWrite ? !written.trim() : false}
+            disabled={
+              isChoice ? !selected : isFreeWrite ? !written.trim() : isSpeak ? false : false
+            }
           >
             {isSpeak ? '完成跟讀' : '核對'}
           </button>

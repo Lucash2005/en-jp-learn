@@ -37,11 +37,17 @@ export interface Exercise {
   language: Language
   level: Level
   prompt: string
+  /** Primary sentence / passage / model answer shown in UI */
   content: string
+  /** Clean text used for TTS / pronunciation target */
+  audioText?: string
+  /** Chinese explanation of the sentence/passage */
+  translation?: string
+  /** Grammar / usage note in Chinese */
+  grammar?: string
   hint?: string
   options?: string[]
   answer?: string
-  /** Speak: phrase to shadow; Listen: transcript; Read: passage; Write: model answer */
 }
 
 export interface DailyProgress {
