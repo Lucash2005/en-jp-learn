@@ -528,6 +528,137 @@
   margin-top: 1rem;
 }
 
+.audio-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+  margin: 0 0 0.85rem;
+}
+
+.btn.audio-btn {
+  background: color-mix(in srgb, var(--sea) 18%, var(--foam));
+  color: var(--ink);
+  border: 1px solid color-mix(in srgb, var(--sea) 35%, transparent);
+}
+
+.btn.audio-btn.playing,
+.btn.recording {
+  background: var(--cinnabar);
+  color: #fff;
+  border-color: transparent;
+}
+
+.muted-listen {
+  color: var(--ink-soft) !important;
+  font-family: var(--font-ui) !important;
+  font-size: 1rem !important;
+}
+
+.pronunciation {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.pronunciation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.listen-pulse {
+  margin: 0;
+  color: var(--cinnabar-deep);
+  font-weight: 600;
+  animation: fade 1s ease infinite alternate;
+}
+
+.hint.warn {
+  color: var(--bad);
+}
+
+.score-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.85rem;
+  align-items: center;
+  padding: 0.85rem;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--mist) 55%, white);
+  border: 1px solid var(--line);
+}
+
+.score-ring {
+  --p: 0%;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: conic-gradient(var(--sea) var(--p), color-mix(in srgb, var(--mist-deep) 70%, white) 0);
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+.score-ring::before {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border-radius: 50%;
+  background: var(--foam);
+}
+
+.score-ring strong,
+.score-ring span {
+  position: relative;
+  line-height: 1.1;
+}
+
+.score-ring strong {
+  font-size: 1.15rem;
+}
+
+.score-ring span {
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+}
+
+.score-label {
+  margin: 0 0 0.25rem;
+  font-weight: 600;
+}
+
+.heard {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.explain-panel {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0 0 0.95rem;
+  padding: 0.9rem 1rem;
+  border-radius: 14px;
+  background: linear-gradient(160deg, #f4f8f6, #f8f1e8);
+  border: 1px solid var(--line);
+}
+
+.explain-panel h3 {
+  margin: 0 0 0.25rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  color: var(--sea);
+  font-weight: 700;
+}
+
+.explain-panel p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
 /* —— Goals / Progress —— */
 .goal-list,
 .skill-bars,
