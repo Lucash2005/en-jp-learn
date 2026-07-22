@@ -469,6 +469,13 @@
   font-family: var(--font-brand);
 }
 
+.quote-source {
+  margin: 0.65rem 0 0;
+  font-size: 0.82rem;
+  color: var(--cinnabar-deep);
+  font-weight: 600;
+}
+
 .hint,
 .speak-guide {
   margin: 0 0 0.85rem;
@@ -657,6 +664,11 @@
   font-size: 0.95rem;
   line-height: 1.55;
   color: var(--ink-soft);
+}
+
+.explain-panel .source-line {
+  color: var(--cinnabar-deep);
+  font-weight: 600;
 }
 
 /* —— Goals / Progress —— */

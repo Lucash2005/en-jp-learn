@@ -88,7 +88,12 @@ export function Practice() {
 
         <div className={`content-block skill-${exercise.skill}`}>
           {showContentText ? (
-            <p className="content-main">{exercise.content}</p>
+            <>
+              <p className="content-main">{exercise.content}</p>
+              {exercise.source && (feedback !== 'idle' || !isListen) && (
+                <p className="quote-source">出自《{exercise.source}》</p>
+              )}
+            </>
           ) : (
             <p className="content-main muted-listen">先聽音訊，再選出意思</p>
           )}

@@ -24,6 +24,12 @@ export function ExplanationPanel({ exercise, revealed = true }: ExplanationPanel
           <p>{exercise.grammar}</p>
         </div>
       )}
+      {exercise.source && (
+        <div>
+          <h3>出處</h3>
+          <p className="source-line">出自《{exercise.source}》</p>
+        </div>
+      )}
     </div>
   )
 }
