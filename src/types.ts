@@ -39,11 +39,13 @@ export interface Exercise {
   prompt: string
   /** Primary sentence / passage / model answer shown in UI */
   content: string
+  /** Japanese content with furigana markup, e.g. 海[うみ] */
+  ruby?: string
   /** Clean text used for TTS / pronunciation target */
   audioText?: string
   /** Chinese explanation of the sentence/passage */
   translation?: string
-  /** Grammar / usage note in Chinese */
+  /** Grammar / usage note (may include 漢字[かんじ] markup) */
   grammar?: string
   /** Quote source, e.g. movie or anime title */
   source?: string

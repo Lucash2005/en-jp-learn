@@ -4,6 +4,7 @@ import { getSpeakableText } from '../lib/speech'
 import { SKILL_LABELS } from '../types'
 import { AudioPlayButton } from './AudioPlayButton'
 import { ExplanationPanel } from './ExplanationPanel'
+import { FuriganaText } from './FuriganaText'
 import { PronunciationPractice } from './PronunciationPractice'
 
 export function Practice() {
@@ -89,7 +90,11 @@ export function Practice() {
         <div className={`content-block skill-${exercise.skill}`}>
           {showContentText ? (
             <>
-              <p className="content-main">{exercise.content}</p>
+              {exercise.language === 'jp' && exercise.ruby ? (
+                <FuriganaText text={exercise.ruby} className="content-main" as="p" />
+              ) : (
+                <p className="content-main">{exercise.content}</p>
+              )}
               {exercise.source && (feedback !== 'idle' || !isListen) && (
                 <p className="quote-source">出自《{exercise.source}》</p>
               )}
@@ -187,7 +192,12 @@ export function Practice() {
             )}
             {feedback === 'review' && isFreeWrite && (
               <p>
-                參考寫法：<strong>{exercise.content}</strong>
+                參考寫法：{' '}
+                {exercise.language === 'jp' && exercise.ruby ? (
+                  <FuriganaText text={exercise.ruby} as="strong" />
+                ) : (
+                  <strong>{exercise.content}</strong>
+                )}
               </p>
             )}
             {feedback === 'review' && isChoice && selected !== exercise.answer && (

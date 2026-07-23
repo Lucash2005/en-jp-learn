@@ -469,6 +469,28 @@
   font-family: var(--font-brand);
 }
 
+.content-main ruby,
+.furigana-line ruby {
+  ruby-align: center;
+  ruby-position: over;
+}
+
+.content-main rt,
+.furigana-line rt {
+  font-size: 0.55em;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  color: var(--ink-soft);
+  letter-spacing: 0;
+}
+
+.furigana-line {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 2.05;
+  color: var(--ink);
+}
+
 .quote-source {
   margin: 0.65rem 0 0;
   font-size: 0.82rem;
